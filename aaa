@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WPMCalc</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: black;         
+        color: yellow;             
+        padding: 40px;
+        max-width: 600px;
+        margin: auto;
+    }
+    h1 {
+        text-align: center;
+        color: yellow;              
+    }
+    .box {
+        background: #111;           
+        color: yellow;            
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #333;  
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+        background: #222;         
+        color: yellow;              
+        border: 1px solid yellow;  
+    }
+    button {
+        margin-top: 15px;
+        padding: 10px;
+        width: 100%;
+        font-size: 16px;
+        background: yellow;         
+        color: black;              
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #e6e600;      
+    }
+    .result {
+        margin-top: 15px;
+        font-weight: bold;
+        font-size: 18px;
+        color: yellow;             
+    }
+</style>
+</head>
+<body>
+
+<h1>Official SB-MT WPM Calculator</h1>
+
+<div class="box">
+    <h3></h3>
+    <input id="wordInput" type="text" placeholder="Word">
+    <input id="timeInput" type="number" placeholder="Time taken (seconds)">
+    <button onclick="calcFromWord()">Calculate</button>
+    <div id="wordResult" class="result"></div>
+</div>
+
+<script>
+
+
+const SB_CONSTANT = 14.6667;
+const MT_CONSTANT = 11.73336;
+
+//calc
+function calcFromWord() {
+    let word = document.getElementById("wordInput").value.trim();
+    let t = parseFloat(document.getElementById("timeInput").value);
+
+    if (!word || isNaN(t) || t <= 0) return;
+
+    let L = word.length;
+
+    let sbWPM = (SB_CONSTANT * L) / t;
+    let mtWPM = (MT_CONSTANT * L) / t;
+
+    // If WPM exceeds 2.2 billion, stop and show message
+    if (sbWPM > 2200000000 || mtWPM > 2200000000) {
+        document.getElementById("wordResult").innerHTML = "im not doing allat";
+        return;
+    }
+
+    document.getElementById("wordResult").innerHTML =
+        "<br>Spelling Bee WPM: " + sbWPM.toFixed(2) +
+        "<br>Monkeytype WPM: " + mtWPM.toFixed(2);
+}
+
+</script>
+
+</body>
+</html>
