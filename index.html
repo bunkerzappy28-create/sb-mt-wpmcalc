@@ -92,8 +92,9 @@ function calcFromWord() {
     }
 
     document.getElementById("wordResult").innerHTML =
-        "<br>Spelling Bee WPM: " + sbWPM.toFixed(2) +
-        "<br>Monkeytype WPM: " + mtWPM.toFixed(2);
+"Spelling Bee WPM: " + Number(sbWPM.toFixed(2)).toLocaleString() +
+"<br>Monkeytype WPM: " + Number(mtWPM.toFixed(2)).toLocaleString();
+
 }
 
 </script>
