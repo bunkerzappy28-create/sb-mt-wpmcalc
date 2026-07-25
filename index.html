@@ -59,21 +59,27 @@
 
 <h1>Official SB-MT WPM Calculator</h1>
 
+
 <div class="box">
-    <h3></h3>
     <input id="wordInput" type="text" placeholder="Word">
-    <input id="timeInput" type="number" placeholder="Time taken (seconds)">
+    <input id="timeInput" type="number" step="0.5" placeholder="Time taken (seconds)">
     <button onclick="calcFromWord()">Calculate</button>
     <div id="wordResult" class="result"></div>
 </div>
 
+
+<div class="box">
+    <input id="wordInput2" type="text" placeholder="Word">
+    <input id="targetWpm" type="number" placeholder="Desired SB WPM">
+    <button onclick="calcRequiredTime()">Required Time</button>
+    <div id="timeResult" class="result"></div>
+</div>
+
 <script>
 
-
-const SB_CONSTANT = 14.6667;
+const SB_CONSTANT = 15.32333;
 const MT_CONSTANT = 11.73336;
 
-//calc
 function calcFromWord() {
     let word = document.getElementById("wordInput").value.trim();
     let t = parseFloat(document.getElementById("timeInput").value);
@@ -85,16 +91,32 @@ function calcFromWord() {
     let sbWPM = (SB_CONSTANT * L) / t;
     let mtWPM = (MT_CONSTANT * L) / t;
 
-    // If WPM exceeds 2.2 billion, stop and show message
+    // integer limit stopper methinks
     if (sbWPM > 2200000000 || mtWPM > 2200000000) {
         document.getElementById("wordResult").innerHTML = "im not doing allat";
         return;
     }
 
     document.getElementById("wordResult").innerHTML =
-"Spelling Bee WPM: " + Number(sbWPM.toFixed(2)).toLocaleString() +
-"<br>MonkeyType WPM (slightly inaccurate): " + Number(mtWPM.toFixed(2)).toLocaleString();
+        "Spelling Bee WPM: " + Number(sbWPM.toFixed(2)).toLocaleString() +
+        "<br>MonkeyType WPM (slightly inaccurate): " + Number(mtWPM.toFixed(2)).toLocaleString();
+}
 
+
+function calcRequiredTime() {
+    let word = document.getElementById("wordInput2").value.trim();
+    let target = parseFloat(document.getElementById("targetWpm").value);
+
+    if (!word || isNaN(target) || target <= 0) return;
+
+    let L = word.length;
+    
+    let requiredTime = (SB_CONSTANT * L) / target;
+   
+    requiredTime = Math.round(requiredTime * 120) / 120;
+
+    document.getElementById("timeResult").innerHTML =
+        "Required time: " + requiredTime + " sec";
 }
 
 </script>
