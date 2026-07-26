@@ -7,71 +7,74 @@
     body {
         font-family: Comic Sans MS, sans-serif;
         background: black;         
-        color: yellow;             
+        color: rgb(217, 227, 54);             
         padding: 40px;
         max-width: 600px;
         margin: auto;
     }
     h1 {
+        font-family: Comic Sans MS, sans-serif;
         text-align: center;
-        color: yellow;              
+        color: rgb(217, 227, 54);              
     }
     .box {
+        font-family: Comic Sans MS, sans-serif;
         background: #111;           
-        color: yellow;            
+        color: rgb(217, 227, 54);            
         padding: 20px;
         margin: 20px 0;
         border-radius: 10px;
         box-shadow: 0 0 10px #333;  
     }
     input {
+        font-family: Comic Sans MS, sans-serif;
         width: 100%;
         padding: 10px;
         margin-top: 10px;
         font-size: 16px;
         background: #222;         
-        color: yellow;              
-        border: 1px solid yellow;  
+        color: rgb(243, 252, 94);              
+        border: 1px solid rgb(217, 227, 54);  
     }
     button {
+        font-family: impact;
         margin-top: 15px;
         padding: 10px;
         width: 100%;
-        font-size: 16px;
-        background: yellow;         
+        font-size: 25px;
+        background: rgb(217, 227, 54);         
         color: black;              
         border: none;
         border-radius: 5px;
         cursor: pointer;
     }
     button:hover {
-        background: #e6e600;      
+        background: rgb(176, 161, 0);      
     }
     .result {
         margin-top: 15px;
-        font-weight: bold;
         font-size: 18px;
-        color: yellow;             
+        color: rgb(217, 227, 54);             
     }
 </style>
 </head>
 <body>
 
-<h1>Official SB-MT WPM Calculator</h1>
+<h1>Official MT-SB WPM Calculator</h1>
+<h2>Word+Time Calculation</h2>
 
 
 <div class="box">
     <input id="wordInput" type="text" placeholder="Word">
     <input id="timeInput" type="number" step="0.5" placeholder="Time taken (seconds)">
-    <button onclick="calcFromWord()">Calculate WPM</button>
+    <button onclick="WordCalculation()">Calculate WPM</button>
     <div id="wordResult" class="result"></div>
 </div>
-
-
+<h2>Word+WPM Calculation</h2>
 <div class="box">
-    <input id="wordInput2" type="text" placeholder="Word">
-    <input id="targetWpm" type="number" placeholder="WPM you want">
-    <button onclick="calcRequiredTime()">Calculate Time</button>
+    <input id="secondwordinput" type="text" placeholder="Word">
+    <input id="desiredwpm" type="number" placeholder="WPM">
+    <button onclick="timeCalculation()">Calculate Time</button>
     <div id="timeResult" class="result"></div>
 </div>
 
@@ -80,7 +83,7 @@
 const SB_CONSTANT = 15.32333;
 const MT_CONSTANT = 11.73336;
 
-function calcFromWord() {
+function WordCalculation() {
     let word = document.getElementById("wordInput").value.trim();
     let t = parseFloat(document.getElementById("timeInput").value);
 
@@ -92,7 +95,7 @@ function calcFromWord() {
     let mtWPM = (MT_CONSTANT * L) / t;
 
     // integer limit stopper methinks
-    if (sbWPM > 2200000000 || mtWPM > 2200000000) {
+    if (sbWPM > 2147483647 || mtWPM > 2147483647) {
         document.getElementById("wordResult").innerHTML = "im not doing allat";
         return;
     }
@@ -103,9 +106,9 @@ function calcFromWord() {
 }
 
 
-function calcRequiredTime() {
-    let word = document.getElementById("wordInput2").value.trim();
-    let target = parseFloat(document.getElementById("targetWpm").value);
+function timeCalculation() {
+    let word = document.getElementById("secondwordinput").value.trim();
+    let target = parseFloat(document.getElementById("desiredwpm").value);
 
     if (!word || isNaN(target) || target <= 0) return;
 
